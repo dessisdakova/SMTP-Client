@@ -24,4 +24,4 @@ Python's built-in library to handle emails and their formats. Implements two mai
 **MIME (Multipurpose Internet Mail Extension)** - standards that enable emails to carry more than just plain text (multimedia, other emails)
 
 
-Used to construct an email into the appropriate format that an SMTP server expects and to parse an email, retrieved from an IMAP server, into a “Message” object Python and work with. 
+Used to construct an email into the appropriate format that an SMTP server expects and to parse an email, retrieved from an IMAP server, into a “Message” object Python can work with. 
