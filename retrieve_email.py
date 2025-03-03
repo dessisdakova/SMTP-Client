@@ -17,16 +17,17 @@ def retrieve_email(sender: str, subject: str):
     try:
         with imaplib.IMAP4_SSL(IMAP_SERVER, PORT) as mail:
             mail.login(EMAIL, APP_PASSWORD)
-            mail.select("Inbox")
+            mail.select("Inbox")  # Select a mailbox to fetch from.
             status, data = mail.search(None, f"(From \"{sender}\")", f"(Subject \"{subject}\")")
             if status == "OK":
-                email_ids = data[0]
-                for email_id in email_ids.split():
-                    status, data = mail.fetch(email_id, "(RFC822)")
+                email_ids = data[0]  # First element of returned list holds the email IDs.
+                for email_id in email_ids.split():  # Element is a byte string with space-separated email IDs,
+                                                    # so it needs to be split to go over each result.
+                    status, data = mail.fetch(email_id, "(RFC822)")  # Fetch entire email.
                     if status == "OK":
                         for response_part in data:
-                            if isinstance(response_part, tuple):
-                                msg = email.message_from_bytes(response_part[1])
+                            if isinstance(response_part, tuple):  # Email is in the tuple.
+                                msg = email.message_from_bytes(response_part[1])  # Convert byte string to an object.
                                 found_emails.append(msg)
         return found_emails
     except Exception as e:
