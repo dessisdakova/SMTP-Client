@@ -12,7 +12,7 @@ SUBJECT = "PythonSMTPClient"
 BODY = "This email has been send by Python SMTP Client."
 
 
-def test_sendi_email():
+def test_send_email():
     result = send_email(EMAIL_ADDRESS, SUBJECT, BODY)
 
     assert result is True

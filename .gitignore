@@ -5,4 +5,5 @@ __pycache__/
 .env
 main.py
 *.log
+*.jpg
 .DS_Store
