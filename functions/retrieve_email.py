@@ -16,7 +16,7 @@ APP_PASSWORD = os.getenv("APP_PASSWORD")
 
 
 def imap_decorator(func: Callable[..., Any]) -> Callable[..., Any]:
-    """A decorator with parameters to establish connection to an IMAP server and perform login."""
+    """A decorator to establish connection to an IMAP server and perform login."""
     @wraps(func)  # preserve original function's metadata
     def wrapper(*args, **kwargs):
         try:

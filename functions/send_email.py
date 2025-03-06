@@ -1,9 +1,11 @@
 import smtplib
 import os
+from email.message import Message
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.application import MIMEApplication
+from typing import Optional
 
 from dotenv import load_dotenv
 
@@ -33,7 +35,7 @@ def send_email(recipient: str, subject: str, body: str, attachment_path: str = N
         return False
 
 
-def _construct_email_message(recipient: str, subject: str, body: str, attachment_path: str = None):
+def _construct_email_message(recipient: str, subject: str, body: str, attachment_path: str = None) -> Optional[Message]:
     """Construct the email object that will be sent."""
     try:
         msg = MIMEMultipart()
