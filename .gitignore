@@ -3,7 +3,7 @@
 __pycache__/
 .venv/
 .env
-main.py
 *.log
 *.jpg
+*.docx
 .DS_Store
