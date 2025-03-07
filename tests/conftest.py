@@ -1,5 +1,7 @@
 import pytest
+
 from functions.retrieve_email import imap_decorator
+from helpers.constants import IMAP_PORT, IMAP_SERVER, EMAIL_ADDRESS, APP_PASSWORD
 
 
 def pytest_collection_modifyitems(items):
@@ -27,12 +29,14 @@ def emails_for_clean_up():
 def clean_up(emails_for_clean_up):
     """Delete all sent emails during tests."""
     yield
+    _delete_emails(emails_for_clean_up)
 
-    @imap_decorator
-    def _delete_emails(mail, emails_to_delete):
-        mail.select("Inbox")
-        for e_subject in emails_to_delete:
-            _, data = mail.search(None, f"(SUBJECT \"{e_subject}\")")
-            for e_id in data[0].split():
-                mail.store(e_id, '+FLAGS', '\\Deleted')
-            mail.expunge()
+
+@imap_decorator(IMAP_SERVER, IMAP_PORT, EMAIL_ADDRESS, APP_PASSWORD)
+def _delete_emails(mail, emails_to_delete):
+    mail.select("Inbox")
+    for e_subject in emails_to_delete:
+        _, data = mail.search(None, f"(SUBJECT \"{e_subject}\")")
+        for e_id in data[0].split():
+            mail.store(e_id, '+FLAGS', '\\Deleted')
+        mail.expunge()

@@ -1,14 +1,5 @@
-import os
-
-from dotenv import load_dotenv
-
 from functions.send_email import send_email
-
-
-load_dotenv()
-EMAIL = os.getenv("EMAIL_ADDRESS")
-IMAGE_PATH = os.getenv("IMAGE_PATH")
-DOC_PATH = os.getenv("DOC_PATH")
+from helpers.constants import EMAIL_ADDRESS, IMAGE_PATH, DOC_PATH
 
 
 def test_sending_email_with_valid_data_and_image_attachment(emails_for_clean_up):
@@ -17,7 +8,7 @@ def test_sending_email_with_valid_data_and_image_attachment(emails_for_clean_up)
 
     body = "This email has been sent by Python SMTP Client and contains an image."
 
-    result = send_email(EMAIL, subject, body, IMAGE_PATH)
+    result = send_email(EMAIL_ADDRESS, subject, body, IMAGE_PATH)
 
     assert result is True
 
@@ -28,7 +19,7 @@ def test_sending_email_with_valid_data_and_document_attachment(emails_for_clean_
 
     body = "This email has been sent by Python SMTP Client and contains a document."
 
-    result = send_email(EMAIL, subject, body, DOC_PATH)
+    result = send_email(EMAIL_ADDRESS, subject, body, DOC_PATH)
 
     assert result is True
 
@@ -39,7 +30,7 @@ def test_sending_email_with_valid_data_without_attachment(emails_for_clean_up):
 
     body = "This email has been sent by Python SMTP Client and has no attachments."
 
-    result = send_email(EMAIL, subject, body)
+    result = send_email(EMAIL_ADDRESS, subject, body)
 
     assert result is True
 
@@ -48,7 +39,7 @@ def test_sending_email_with_invalid_subject():
     subject = 123
     body = "This email has been sent by Python SMTP Client."
 
-    result = send_email(EMAIL, subject, body)
+    result = send_email(EMAIL_ADDRESS, subject, body)
 
     assert result is False
 
@@ -57,7 +48,7 @@ def test_sending_email_with_invalid_body():
     subject = "PythonSMTPClient"
     body = 123
 
-    result = send_email(EMAIL, subject, body)
+    result = send_email(EMAIL_ADDRESS, subject, body)
 
     assert result is False
 
@@ -67,6 +58,6 @@ def test_sending_email_with_invalid_path_attachment():
     body = "This email has been sent by Python SMTP Client."
     path = "invalid/path/to/attachment"
 
-    result = send_email(EMAIL, subject, body, path)
+    result = send_email(EMAIL_ADDRESS, subject, body, path)
 
     assert result is False
